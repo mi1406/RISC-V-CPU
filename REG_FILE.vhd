@@ -29,7 +29,7 @@ generic(XLEN : integer := 64);
         readReg3       :out std_logic_vector(XLEN - 1 downto 0);
         readReg4       :out std_logic_vector(XLEN - 1 downto 0);
         readReg5       :out std_logic_vector(XLEN - 1 downto 0);
-        reafReg6       :out std_logic_vector(XLEN - 1 downto 0)
+        readReg6       :out std_logic_vector(XLEN - 1 downto 0)
     );
 end reg_file;
 
@@ -53,7 +53,7 @@ begin
             reg(to_integer(unsigned(wrireReg3))) <= writeRegValue3;
         end if;
     end if;
-end process writ_reg;
+end process write_reg;
 
 read_reg: process(reg1, reg2, reg3, reg4, reg5, reg6)
 begin
@@ -83,9 +83,9 @@ begin
         readReg5 <= reg(to_integer(unsigned(reg5)));
     end if;
     if(to_integer(unsigned(reg6)) = 0) then
-        reafReg6 <= (XLEN - 1 downto 0 => '0');
+        readReg6 <= (XLEN - 1 downto 0 => '0');
     else
-        reafReg6 <= reg(to_integer(unsigned(reg6)));
+        readReg6 <= reg(to_integer(unsigned(reg6)));
     end if;
 
 end process read_reg;
