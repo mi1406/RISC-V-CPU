@@ -12,15 +12,15 @@ generic(XLEN : integer := 64);
         clk            :in std_logic;
         sresetn        :in std_logic; 
         writeEanble    :in std_logic;
-        reg1           :in std_logic_vector(integer(ceil(log2(real(XLEN)))) - 1 downto 0);
-        reg2           :in std_logic_vector(integer(ceil(log2(real(XLEN)))) - 1 downto 0);
-        reg3           :in std_logic_vector(integer(ceil(log2(real(XLEN)))) - 1 downto 0);
-        reg4           :in std_logic_vector(integer(ceil(log2(real(XLEN)))) - 1 downto 0);
-        reg5           :in std_logic_vector(integer(ceil(log2(real(XLEN)))) - 1 downto 0);
-        reg6           :in std_logic_vector(integer(ceil(log2(real(XLEN)))) - 1 downto 0);
-        writeReg1      :in std_logic_vector(integer(ceil(log2(real(XLEN)))) - 1 downto 0);
-        writeReg2      :in std_logic_vector(integer(ceil(log2(real(XLEN)))) - 1 downto 0);
-        wrireReg3      :in std_logic_vector(integer(ceil(log2(real(XLEN)))) - 1 downto 0);
+        reg1           :in std_logic_vector(5 - 1 downto 0);
+        reg2           :in std_logic_vector(5 - 1 downto 0);
+        reg3           :in std_logic_vector(5 - 1 downto 0);
+        reg4           :in std_logic_vector(5 - 1 downto 0);
+        reg5           :in std_logic_vector(5 - 1 downto 0);
+        reg6           :in std_logic_vector(5 - 1 downto 0);
+        writeReg1      :in std_logic_vector(5 - 1 downto 0);
+        writeReg2      :in std_logic_vector(5 - 1 downto 0);
+        wrireReg3      :in std_logic_vector(5 - 1 downto 0);
         writeRegValue1 :in std_logic_vector(XLEN - 1 downto 0);
         writeRegValue2 :in std_logic_vector(XLEN - 1 downto 0);
         writeRegValue3 :in std_logic_vector(XLEN - 1 downto 0);
@@ -34,7 +34,7 @@ generic(XLEN : integer := 64);
 end reg_file;
 
 architecture BEHAVIOUR of reg_file is
-type RAM is array (XLEN - 1 downto 0) of std_logic_vector(XLEN - 1 downto 0);
+type RAM is array (XLEN / 2 - 1 downto 0) of std_logic_vector(XLEN - 1 downto 0);
 signal reg : ram;
 
 begin
@@ -44,10 +44,10 @@ variable i : integer range 0 to XLEN          ;
 begin    
     if rising_edge(clk) then
         if(sresetn = '0') then
-            for i in 0 to XLEN - 1 loop
+            for i in 0 to ((XLEN/2) - 1) loop
                 reg(i) <= (others => '0');
             end loop;                                 
-        elsif writeEanble = '1' the                n 
+        elsif writeEanble = '1' then 
             reg(to_integer(unsigned(writeReg1))) <= writeRegValue1;
             reg(to_integer(unsigned(writeReg2))) <= writeRegValue2;
             reg(to_integer(unsigned(wrireReg3))) <= writeRegValue3;
